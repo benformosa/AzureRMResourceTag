@@ -75,7 +75,10 @@ process {
                 # Remove "TAG_" from the Hash keys
                 $Tags = @{}
                 $ResourceHash.GetEnumerator() | ForEach-Object {
-                    $Tags."$($_.Name.replace($TagPrefix,''))" = $_.Value
+                    # Only set tags with values
+                    if($_.Value) {
+                        $Tags."$($_.Name.replace($TagPrefix,''))" = $_.Value
+                    }
                 }
                 Write-Verbose "    Found $($Tags.count) tags"
                 
